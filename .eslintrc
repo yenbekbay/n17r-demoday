@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb-base",
+  "plugins": [
+    "html"
+  ],
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0
+  },
+  "globals": {
+    "document": true
+  }
+}
