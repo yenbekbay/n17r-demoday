@@ -68,6 +68,7 @@ export default {
 
       reader.onload = ({ target: { result } }) => {
         const image = new Image();
+        const extension = result.match(/^data:(.*);/)[1];
 
         image.onload = () => {
           const canvas = document.createElement('canvas');
@@ -90,13 +91,13 @@ export default {
           canvas.height = height;
           canvas.getContext('2d').drawImage(image, 0, 0, width, height);
 
-          this.imageSource = canvas.toDataURL('image/jpeg');
+          this.imageSource = canvas.toDataURL(extension);
 
           this.file = dataUrlToFile(
             this.imageSource,
             file.name.replace(
               /(.+)\.([^\.]+)/,
-              `$1-${new Date().getTime()}.jpg`
+              `$1-${new Date().getTime()}.$2`
             )
           );
 

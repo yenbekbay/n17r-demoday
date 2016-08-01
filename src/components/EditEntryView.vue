@@ -1,83 +1,85 @@
 <template>
-  <div class="submission">
-    <h1 class="title has-text-centered">{{ title }}</h1>
-    <div class="columns">
-      <div class="column is-6 is-offset-3">
-        <pulse-loader :class="'has-text-centered'" :loading="loading" :color="'#1fc8db'"></pulse-loader>
-        <div v-show="!loading">
-          <label class="label" for="title-input">Title</label>
-          <p class="control">
-            <text-input
-              :value.sync="app.title"
-              id="title-input"
-              placeholder="App title"
-            >
-          </p>
-          <label class="label" for="description-input">Description (1 sentence)</label>
-          <p class="control">
-            <text-input
-              :multiline="true"
-              :value.sync="app.description"
-              id="description-input"
-              placeholder="App description"
-            >
-          </p>
-          <label class="label" for="website-input">Website URL</label>
-          <p class="control">
-            <text-input
-              :value.sync="app.websiteUrl"
-              :validate="validateWebsite"
-              id="website-input"
-              placeholder="App website URL"
-            >
-          </p>
-          <label class="label" for="app-store-id-input">App Store ID (e.g. 123456789)</label>
-          <p class="control">
-            <text-input
-              :value.sync="app.appStoreId"
-              id="app-store-id-input"
-              placeholder="App Store ID"
-            >
-          </p>
-          <label class="label" for="google-play-id-input">Google Play package name (e.g. com.example.app)</label>
-          <p class="control">
-            <text-input
-              :value.sync="app.googlePlayId"
-              id="google-play-id-input"
-              placeholder="Google Play package name"
-            >
-          </p>
-          <label class="label">Icon (.jpg)</label>
-          <div class="control">
-            <image-input
-              :file.sync="app.iconFile"
-              :image-url.sync="app.iconUrl"
-              :image-color.sync="app.iconColor"
-              :max-size="512"
-            >
-          </div>
-          <label class="label">Team members</label>
-          <div class="team-input-container">
-            <template v-for="(idx, teamMember) in app.teamMembers">
-              <team-member-input
-                :team-member.sync="teamMember"
-                :on-remove="() => removeTeamMember(idx)"
+  <section class="section app-content">
+    <div class="container">
+      <h1 class="title has-text-centered">{{ title }}</h1>
+      <div class="columns">
+        <div class="column is-6 is-offset-3">
+          <pulse-loader :class="'has-text-centered'" :loading="loading" :color="'#1fc8db'"></pulse-loader>
+          <div v-show="!loading">
+            <label class="label" for="title-input">Title</label>
+            <p class="control">
+              <text-input
+                :value.sync="app.title"
+                id="title-input"
+                placeholder="App title"
               >
-            </template>
-            <a class="button is-fullwidth" v-on:click="addTeamMember">Add another member</a>
+            </p>
+            <label class="label" for="description-input">Description (1 sentence)</label>
+            <p class="control">
+              <text-input
+                :multiline="true"
+                :value.sync="app.description"
+                id="description-input"
+                placeholder="App description"
+              >
+            </p>
+            <label class="label" for="website-input">Website URL</label>
+            <p class="control">
+              <text-input
+                :value.sync="app.websiteUrl"
+                :validate="validateWebsite"
+                id="website-input"
+                placeholder="App website URL"
+              >
+            </p>
+            <label class="label" for="app-store-id-input">App Store ID (e.g. 123456789)</label>
+            <p class="control">
+              <text-input
+                :value.sync="app.appStoreId"
+                id="app-store-id-input"
+                placeholder="App Store ID"
+              >
+            </p>
+            <label class="label" for="google-play-id-input">Google Play package name (e.g. com.example.app)</label>
+            <p class="control">
+              <text-input
+                :value.sync="app.googlePlayId"
+                id="google-play-id-input"
+                placeholder="Google Play package name"
+              >
+            </p>
+            <label class="label">Icon (.png)</label>
+            <div class="control">
+              <image-input
+                :file.sync="app.iconFile"
+                :image-url.sync="app.iconUrl"
+                :image-color.sync="app.iconColor"
+                :max-size="512"
+              >
+            </div>
+            <label class="label">Team members</label>
+            <div class="team-input-container">
+              <template v-for="(idx, teamMember) in app.teamMembers">
+                <team-member-input
+                  :team-member.sync="teamMember"
+                  :on-remove="() => removeTeamMember(idx)"
+                >
+              </template>
+              <a class="button is-fullwidth" v-on:click="addTeamMember">Add another member</a>
+            </div>
+            <a
+              class="button is-primary is-fullwidth"
+              v-on:click="save"
+              :class="{'is-loading': saving}"
+            >Save</a>
           </div>
-          <a
-            class="button is-primary is-fullwidth"
-            v-on:click="save"
-            :class="{'is-loading': saving}"
-          >Save</a>
+          <br>
+          <div class="notification is-danger" v-show="error">{{ error }}</div>
+          <div class="notification is-success" v-show="successMessage">{{ successMessage }}</div>
         </div>
-        <br>
-        <div class="notification is-danger" v-show="error">{{ error }}</div>
-        <div class="notification is-success" v-show="successMessage">{{ successMessage }}</div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

@@ -12,16 +12,12 @@
       </nav>
     </div>
   </header>
-  <section class="section app-content">
-    <div class="container">
-      <router-view
-        class="animated"
-        transition="fade"
-        transition-mode="out-in"
-        keep-alive>
-      </router-view>
-    </div>
-  </section>
+  <router-view
+    class="animated"
+    transition="fade"
+    transition-mode="out-in"
+    keep-alive>
+  </router-view>
   <footer class="footer">
     <div class="container app-footer">
       <p class="has-text-centered"><a href="http://n17r.com/">nFactorial Incubator</a> 2016</p>
@@ -33,6 +29,7 @@
 @import "../app.styl"
 
 body
+  background-color: #f5f7fa
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 #n17r-logo
   padding: 5px
@@ -52,9 +49,9 @@ body
     overflow: hidden
     overflow-x: auto
     white-space: nowrap
-.app-content
-  background-color: #F5F7FA
+.app-header + .app-content
   padding-top: 80px
+.app-content
   .container > .title
     margin-bottom: 30px
   .v-spinner

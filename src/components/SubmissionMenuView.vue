@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <h1 class="title has-text-centered">{{ title }}</h1>
-    <div class="columns">
-      <div class="column is-6 is-offset-3">
-        <a class="button is-large is-fullwidth" v-link="{ path: '/submission/new' }">Add a new app</a>
-        <a class="button is-large is-fullwidth" v-link="{ path: '/submission/list' }">Edit an existing app</a>
+  <section class="section app-content">
+    <div class="container">
+      <h1 class="title has-text-centered">{{ title }}</h1>
+      <div class="columns">
+        <div class="column is-6 is-offset-3">
+          <a class="button is-large is-fullwidth" v-link="{ path: '/submission/new' }">Add a new app</a>
+          <a class="button is-large is-fullwidth" v-link="{ path: '/submission/list' }">Edit an existing app</a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

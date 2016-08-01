@@ -1,21 +1,23 @@
 <template>
-  <div class="submission">
-    <h1 class="title has-text-centered">{{ title }}</h1>
-    <div class="columns">
-      <div class="column is-6 is-offset-3">
-        <div class="notification is-danger" v-show="error">{{ error }}</div>
-        <div class="notification is-success" v-show="successMessage">{{ successMessage }}</div>
-        <div class="notification is-warning" v-show="!loading && !apps.length">No submissions yet</div>
-        <pulse-loader :class="'has-text-centered'" :loading="loading" :color="'#1fc8db'"></pulse-loader>
-        <div class="app-list" v-show="!loading && apps.length">
-          <a class="app-row" v-link="{ path: `/submission/${app.id}` }" v-for="app in apps">
-            <img class="app-icon" :src="app.iconUrl">
-            <h5 class="title">{{ app.title }}</h5>
-          </a>
-        </table>
+  <section class="section app-content">
+    <div class="container">
+      <h1 class="title has-text-centered">{{ title }}</h1>
+      <div class="columns">
+        <div class="column is-6 is-offset-3">
+          <div class="notification is-danger" v-show="error">{{ error }}</div>
+          <div class="notification is-success" v-show="successMessage">{{ successMessage }}</div>
+          <div class="notification is-warning" v-show="!loading && !apps.length">No submissions yet</div>
+          <pulse-loader :class="'has-text-centered'" :loading="loading" :color="'#1fc8db'"></pulse-loader>
+          <div class="app-list" v-show="!loading && apps.length">
+            <a class="app-row" v-link="{ path: `/submission/${app.id}` }" v-for="app in apps">
+              <img class="app-icon" :src="app.iconUrl">
+              <h5 class="title">{{ app.title }}</h5>
+            </a>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
