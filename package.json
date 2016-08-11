@@ -53,6 +53,7 @@
     "plural-ru": "^1.1.1",
     "rgbaster.js": "^1.0.0",
     "vue": "^1.0.8",
+    "vue-disqus": "^1.0.2",
     "vue-router": "^0.7.5",
     "vue-spinner": "^1.0.2"
   }

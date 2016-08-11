@@ -62,6 +62,10 @@
                 </div>
               </div>
             </div>
+
+            <div class="comments">
+              <disqus shortname="gradientincubator"></disqus>
+            </div>
           </div>
         </div>
       </div>
@@ -71,6 +75,7 @@
 
 <script>
 import _ from 'lodash';
+import Disqus from 'vue-disqus';
 import Macy from 'macy';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 
@@ -91,7 +96,8 @@ export default {
   name: 'DemodayView',
   components: {
     PulseLoader,
-    FlipClock
+    FlipClock,
+    Disqus
   },
   data() {
     return {
@@ -201,4 +207,7 @@ export default {
       font-size: 22px
   .app-team-member + .app-team-member
     border-top: 1px solid rgba(211, 214, 219, 0.5)
+
+.comments
+  margin-top: 40px
 </style>
