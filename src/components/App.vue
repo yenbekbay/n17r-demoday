@@ -49,6 +49,8 @@ body
     overflow: hidden
     overflow-x: auto
     white-space: nowrap
+.section
+  background: none
 .app-header + .app-content
   padding-top: 80px
 .app-content

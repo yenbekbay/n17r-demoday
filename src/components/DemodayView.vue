@@ -17,6 +17,7 @@
             <div class="notification is-danger" v-show="error">{{ error }}</div>
             <div class="notification is-warning" v-show="!loading && !apps.length">Пока ничего нет – зайдите чуть позже</div>
             <pulse-loader :class="'has-text-centered'" :loading="loading" :color="'#1fc8db'"></pulse-loader>
+
             <div class="app-cards">
               <div class="app-card" v-for="app in apps" track-by="$index">
                 <div class="app-info columns is-mobile" :style="{'background-color': app.iconColor}">
@@ -37,7 +38,7 @@
                     <p class="app-description" :style="{'color': app.textColor}">
                       {{{ app.description | formatNewlines }}}
                     </p>
-                    <a class="app-website-link" :style="{'color': app.textColor}" :href="app.websiteUrl">
+                    <a class="app-website-link" :style="{'color': app.textColor}" :href="app.websiteUrl" v-if="app.websiteUrl">
                       {{ app.cleanWebsiteUrl }}
                     </a>
                     <a class="app-download-button" href="https://itunes.apple.com/app/id{{ app.appStoreId }}" v-if="app.appStoreId">
@@ -104,12 +105,14 @@ export default {
     store
       .getApps()
       .then(apps => {
-        this.apps = apps.map(app => _.assign(app, {
+        this.apps = _.shuffle(apps).map(app => _.assign(app, {
           textColor: (app.iconColor && app.iconColor !== 'rgb()')
             ? getNormalizedTextColor(app.iconColor)
-            : '#f5f7fa',
+            : null,
           cleanWebsiteUrl: _.nth(
-            app.websiteUrl.match(/https?:\/\/(?:www)?\.?(.*)/),
+            app.websiteUrl
+              .replace(/\/$/, '')
+              .match(/https?:\/\/(?:www)?\.?(.*)/),
             1
           )
         }));
@@ -163,9 +166,11 @@ export default {
       border-color: #fff
 
 .app-card
+  background-color: white
   border-radius: 4px
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
   overflow: hidden
+  margin-bottom: 10px
   .columns
     align-items: center
     margin: 0
