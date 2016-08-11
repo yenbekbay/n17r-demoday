@@ -5,20 +5,23 @@
       <div class="columns">
         <div class="column is-6 is-offset-3">
           <pulse-loader :class="'has-text-centered'" :loading="loading" :color="'#1fc8db'"></pulse-loader>
-          <div v-show="!loading">
-            <label class="label" for="title-input">Title</label>
+          <form v-on:submit.prevent="onSubmit" v-show="!loading">
+            <label class="label" for="title-input">Title *</label>
             <p class="control">
               <text-input
+                :required="true"
                 :value.sync="app.title"
                 id="title-input"
                 placeholder="App title"
               >
             </p>
-            <label class="label" for="description-input">Description (1 sentence)</label>
+            <label class="label" for="description-input">Description *</label>
             <p class="control">
               <text-input
+                :required="true"
                 :multiline="true"
                 :value.sync="app.description"
+                :validate="validateDescription"
                 id="description-input"
                 placeholder="App description"
               >
@@ -48,7 +51,7 @@
                 placeholder="Google Play package name"
               >
             </p>
-            <label class="label">Icon (.png)</label>
+            <label class="label">Icon (.png) *</label>
             <div class="control">
               <image-input
                 :file.sync="app.iconFile"
@@ -57,7 +60,7 @@
                 :max-size="512"
               >
             </div>
-            <label class="label">Team members</label>
+            <label class="label">Team members *</label>
             <div class="team-input-container">
               <template v-for="(idx, teamMember) in app.teamMembers">
                 <team-member-input
@@ -67,12 +70,11 @@
               </template>
               <a class="button is-fullwidth" v-on:click="addTeamMember">Add another member</a>
             </div>
-            <a
+            <button type="submit"
               class="button is-primary is-fullwidth"
-              v-on:click="save"
               :class="{'is-loading': saving}"
-            >Save</a>
-          </div>
+            >Save</button>
+          </form>
           <br>
           <div class="notification is-danger" v-show="error">{{ error }}</div>
           <div class="notification is-success" v-show="successMessage">{{ successMessage }}</div>
@@ -156,6 +158,13 @@ export default {
 
       return null;
     },
+    validateDescription(text) {
+      if (text.length > 300) {
+        return 'Please keep the description length up to 300 characters';
+      }
+
+      return null;
+    },
     addTeamMember() {
       this.app.teamMembers.push({
         name: '',
@@ -170,17 +179,16 @@ export default {
         this.addTeamMember();
       }
     },
-    save() {
+    onSubmit() {
       const {
         title,
         description,
-        websiteUrl,
         iconFile,
         iconUrl,
         teamMembers
       } = this.app;
       const validateForm = () => {
-        if (!title || !description || !websiteUrl || (!iconFile && !iconUrl)) {
+        if (!title || !description || (!iconFile && !iconUrl)) {
           return false;
         }
 

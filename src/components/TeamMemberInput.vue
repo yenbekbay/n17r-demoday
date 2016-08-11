@@ -10,6 +10,7 @@
     <div class="media-content">
       <p class="control">
         <text-input
+          :required="true"
           :value.sync="teamMember.name"
           id="name-input"
           placeholder="Member name"
@@ -17,8 +18,10 @@
       </p>
       <p class="control">
         <text-input
+          :required="true"
           :multiline="true"
           :value.sync="teamMember.bio"
+          :validate="validateBio"
           id="bio-input"
           placeholder="Member biography"
         >
@@ -40,6 +43,15 @@ export default {
   components: {
     ImageInput,
     TextInput
+  },
+  methods: {
+    validateBio(text) {
+      if (text.length > 300) {
+        return 'Please keep the description length up to 300 characters';
+      }
+
+      return null;
+    },
   }
 };
 </script>

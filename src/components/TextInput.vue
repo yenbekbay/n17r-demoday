@@ -3,6 +3,7 @@
     v-if="multiline"
     v-model="value"
     class="textarea"
+    :required="required"
     :class="{'is-danger': error}"
     :id="id"
     :placeholder="placeholder">
@@ -12,6 +13,7 @@
     v-model="value"
     class="input"
     type="text"
+    :required="required"
     :class="{'is-danger': error}"
     :id="id"
     :placeholder="placeholder"
@@ -22,7 +24,7 @@
 <script>
 export default {
   name: 'TextInput',
-  props: ['value', 'id', 'multiline', 'placeholder', 'validate'],
+  props: ['value', 'id', 'multiline', 'placeholder', 'validate', 'required'],
   data() {
     return {
       error: ''
